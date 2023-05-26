@@ -1,8 +1,27 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const Circle = require("./lib/shapesList/circle");
+const Square = require("./lib/shapesList/square");
+const Triangle = require("./lib/shapesList/triangle");
 
 function generateSVG(text, textColor, shape, shapeColor) {
-	console.log(text, textColor, shape, shapeColor);
+  let svg = "";
+  switch(shape) {
+    case "Circle":
+      const circle = new Circle(text, textColor, shapeColor);
+      svg = circle.generateSvg();
+      break;
+    case "Triangle":
+      const triangle = new Triangle(text, textColor, shapeColor);
+      svg = triangle.generateSvg();
+      break;
+    case "Square":
+      const square = new Square(text, textColor, shapeColor);
+      svg = square.generateSvg();
+      break;
+    default:
+  }
+  console.log(svg);
 }
 
 function init() {
