@@ -21,7 +21,7 @@ function generateSVG(text, textColor, shape, shapeColor) {
       break;
     default:
   }
-  console.log(svg);
+	fs.writeFile("./img/logo.svg", svg, (err) => err ? console.log(err) : console.log('Generated logo!'));
 }
 
 function init() {
