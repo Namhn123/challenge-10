@@ -3,30 +3,35 @@ const fs = require("fs");
 const Circle = require("./lib/shapesList/circle");
 const Square = require("./lib/shapesList/square");
 const Triangle = require("./lib/shapesList/triangle");
+//based on which shape the user chooses, create new instance of shape and write to file
+function generateSvg(text, textColor, shape, shapeColor) {
+  if(text.length > 3) { //function won't continue if the user's text input is larger than 3 characters
+    console.log("Logo text is larger than 3 characters. Please try again");
+    return;
+  }
 
-function generateSVG(text, textColor, shape, shapeColor) {
   let svg = "";
-  switch(shape) {
+  switch(shape) {//based on user's choice, creates new instance of the specific shape and calls the renderSvg function for each
     case "Circle":
       const circle = new Circle(text, textColor, shapeColor);
-      svg = circle.generateSvg();
+      svg = circle.renderSvg();
       break;
     case "Triangle":
       const triangle = new Triangle(text, textColor, shapeColor);
-      svg = triangle.generateSvg();
+      svg = triangle.renderSvg();
       break;
     case "Square":
       const square = new Square(text, textColor, shapeColor);
-      svg = square.generateSvg();
+      svg = square.renderSvg();
       break;
     default:
   }
-	fs.writeFile("./img/logo.svg", svg, (err) => err ? console.log(err) : console.log('Generated logo!'));
+	fs.writeFile("./img/logo.svg", svg, (err) => err ? console.log(err) : console.log('Generated logo!'));//writes string to file
 }
-
+//asks the user questions and calls function with user input as parameters
 function init() {
   inquirer
-    .prompt([
+    .prompt([//prompts the user with questions
       {
         type: "input",
         name: "text",
@@ -49,7 +54,7 @@ function init() {
         message: "Please enter a color or hex code for the shape: ",
       }
 		]).then((data) => {
-			generateSVG(data.text, data.textColor, data.shape, data.shapeColor);
+			generateSvg(data.text, data.textColor, data.shape, data.shapeColor);//calls generateSVG with
 		});}
-
+//calling init function
 init();
